@@ -24,6 +24,10 @@ export default async function handler(req, res) {
   const messages = body.messages ?? [{ role: 'user', content: body.prompt ?? 'Hello' }];
 
   try {
+    const openai_model = req.headers["x-openai-model"];
+    if (openai_model == null) {
+      openai_model = process.env.OPENAI_MODEL;
+    } 
     const r = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -31,7 +35,7 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: openai_model,
         messages: messages.map((m) => ({ role: m.role, content: m.text ?? m.content })),
         max_tokens: 800,
         temperature: 0.7,
