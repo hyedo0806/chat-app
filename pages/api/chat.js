@@ -11,6 +11,10 @@ Example Save as: /pages/api/chat.js
 /* eslint-disable import/no-anonymous-default-export */
 
 export default async function handler(req, res) {
+  const clientKey = req.headers["x-access-token"];
+  if (clientKey !== process.env.MY_ACCESS_TOKEN) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
