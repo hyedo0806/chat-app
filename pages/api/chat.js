@@ -20,9 +20,10 @@ export default async function handler(req, res) {
   const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
   if (!OPENAI_API_KEY) return res.status(500).json({ error: 'Missing OPENAI_API_KEY on server' });
 
+  console.log(req);
   const body = req.body;
   const messages = body.messages ?? [{ role: 'user', content: body.prompt ?? 'Hello' }];
-
+  console.log(messages);
   try {
     const openai_model = req.headers["x-openai-model"];
     if (openai_model == null) {
