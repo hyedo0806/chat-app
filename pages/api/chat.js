@@ -39,7 +39,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: openai_model,
         messages: messages.map((m) => ({ role: m.role, content: m.text ?? m.content })),
-        max_tokens: 800,
+        max_tokens: 1000,
         temperature: 0.7,
       }),
     });
