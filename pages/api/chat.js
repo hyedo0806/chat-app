@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   const messages = body.messages ?? [{ role: 'user', content: body.prompt ?? 'Hello' }];
   console.log(messages);
   try {
-    const openai_model = req.headers["x-openai-model"];
+    let openai_model = req.headers["x-openai-model"];
     if (openai_model == null) {
       openai_model = process.env.OPENAI_MODEL;
     } 
